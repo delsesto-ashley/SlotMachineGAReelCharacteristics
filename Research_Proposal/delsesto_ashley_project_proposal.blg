@@ -1,0 +1,15 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'delsesto_ashley_project_proposal.blg'
+[371] biber-MSWIN64:340> INFO - === 
+[902] Biber.pm:419> INFO - Reading 'delsesto_ashley_project_proposal.bcf'
+[1132] Biber.pm:979> INFO - Found 4 citekeys in bib section 0
+[1164] Biber.pm:4419> INFO - Processing section 0
+[1209] Biber.pm:4610> INFO - Looking for bibtex file 'references.bib' for section 0
+[1306] bibtex.pm:1713> INFO - LaTeX decoding ...
+[1331] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
+[1488] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1489] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1490] Biber.pm:4239> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[1490] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[1496] bbl.pm:660> INFO - Writing 'delsesto_ashley_project_proposal.bbl' with encoding 'UTF-8'
+[1501] bbl.pm:763> INFO - Output to delsesto_ashley_project_proposal.bbl
