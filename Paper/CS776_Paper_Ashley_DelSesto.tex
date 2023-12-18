@@ -1,0 +1,718 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{algorithmic}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{tkz-graph}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.7}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{verbatim}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{csvsimple}
+\usepackage[
+backend=biber,
+style=ieee,
+sorting=none
+]{biblatex}
+\addbibresource{references.bib}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Optimizing RTP in Slot Machines While Preserving Reel Characteristics\\
+}
+
+\author{\IEEEauthorblockN{Ashley Del Sesto}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering} \\
+\textit{University of Nevada, Reno}\\
+Reno, Nevada \\
+adelsesto@nevada.unr.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+This research presents a Genetic Algorithm (GA) approach for finding solutions to the multicriteria problem of optimizing Return-To-Player (RTP), symbol diversity, and bonus game hit frequency. Many slot machines incorporate reel characteristics (e.g., stacked wild symbols) as features in the base game to enhance player experience. By utilizing a stack-centric framework for our GA, this research demonstrates how to create several slot machine base game math models that yield favorable values for the listed criteria. Furthermore, this work uses a methodology not previously used in this field of GA study to promptly yield the exact RTP for a base game.
+\end{abstract}
+
+\begin{IEEEkeywords}
+genetic algorithm, evolutionary computing, slot machine, RTP, reels
+\end{IEEEkeywords}
+
+\section{Introduction}
+Slot machines, or electronic gaming machines, are an iconic and lucrative product vertical in the United States' gaming industry.
+These devices use reels, arrays of symbols that ``spin inside the slot machine window"\cite{SlotsDict}.
+Each entry in the reel array corresponds to a symbol from the game's symbol list and a reel stopping position, or ``reel stop"\cite{SlotsDict}.
+The symbol list $S$ is a list of all symbols present on at least one reel.
+A slot machine contains at least one reel, usually containing three or five adjacent reels.
+The reel window displays a portion of each reel to the player.
+This window is hereby denoted as $m\times n$, where $m$ is the number of symbols displayed vertically in the reel window, or reel window height, and $n$ is the number of reels. 
+The reel window is the basis for most awards from a slot machine.
+Symbol patterns, otherwise known as pay combos, award credits or other prizes if the reel window contains said symbol pattern on viable positions specified by the slot machine.
+The symbol patterns for positions specified by line patterns are listed in $P_l$.
+The symbol patterns for positions specified by scatter patterns are listed in $P_s$.
+A random number generator, or RNG, is used to determine, for each reel, which reel stop is selected to display in the reel window\cite{SlotsDict}.
+\par
+The U.S. commercial gaming industry saw significant growth in 2023 with Q1 and Q3 being the two all-time highest grossing quarters for the industry\cite{AGA2023}.
+This increase in demand for both land-based and iGaming verticals coincides with an increase in game complexity.
+Though having ``developers innovating all the time"\cite{Baldo2022} is indicative of a healthy industry, slot game mathematicians may exercise caution in where they choose to innovate on their game design ideas.
+A slot game mathematician developing a game may have preliminary benchmarks that the slot machine model must meet such as Return-to-Player (RTP) and bonus game hit frequency. RTP is the average percentage of a wager that a slot machine will award to a player.
+\begin{equation}
+\text{RTP} = \frac{\text{Credits Awarded}}{\text{Credits Wagered}}
+\end{equation}
+Many slot machines include a bonus game where a player can win additional credits or prizes. A common trigger for awarding a bonus game is having three or more bonus symbols visible in the reel window when the reels stop. The bonus game hit frequency is the average number of wagers a player will make before a bonus game is awarded.
+\par
+Furthermore, a game may be prescribed reel characteristics such as stacked wilds or displaying at most one bonus symbol per reel on any given reel stop.
+Symbol stacking is terminology used to describe the consecutive ordering of a given symbol.
+Thus the phrase stacked wilds describes the consecutive ordering of wilds, symbols that substitute for many if not all symbols in the symbol list.
+\par
+This research is motivated by previous work incorporating Genetic Algorithms (GAs) along with firsthand experience in creating slot machine games.
+If a base game can be created by an algorithm, then a slot game mathematician can spend more time innovating on the other facets of a game such as a bonus game.
+This work seeks to expand the use of GAs in slot machine math development by reducing the time needed to yield a fitness value and incorporate desired reel characteristics in an individual's chromosomal representation.
+RTP, symbol diversity, and bonus game hit frequency are optimized for the base game of a slot machine.
+The code used for this research can be found in the cited GitHub Repository\cite{ReelCharacteristicsRepo}.
+\par
+The structure of this paper is as follows: Section \ref{prior} summarizes work related to slot machine RTP optimization and evolutionary computing. Section \ref{method} presents the proposed framework for the GA. The particular slot machine game math model used is presented in Section \ref{design}. Section \ref{result} details the results from this experiment. This work concludes in Section \ref{conclusions} with summarized thoughts and prompts for continued research.
+\section{Prior Work}
+\label{prior}
+\subsection{Solution Representation}
+In 2014, Balabanov, Zankinski, and Shumanov published the first paper related to evolutionary computing and slot machine RTP optimization\cite{balabanov2015slot}.
+These authors developed a 5-reel slot machine with 63 reel stops per reel and used a $3\times 5$ reel window.
+They used a 2D chromosome to represent this slot machine; each 1D array in the 2D chromosome was mapped to a slot machine reel and each reel position mapped to a symbol in the symbol list. Thus the chromosome had $5 \times 63 = 315$ values.
+\par
+Each other paper mentioned in this section uses this representation for their solution space.
+\subsection{Genetic Algorithms}
+Reference \cite{balabanov2015slot} implemented a GA to optimize RTP for a slot machine model.
+The authors initialized each individual in this math model with a chromosome that yielded $90.88\%$ RTP.
+Their solution targeted $99\%$ RTP.
+They ran $100,000$ or $1,000,000$ Monte Carlo simulations to approximate RTP for each individual in each generation; they concluded that this method was successful yet time-consuming\cite{balabanov2015slot}.
+In 2021, Kamanas, Sifaleras, and Samaras identified an issue with this approach \cite{kamanas2021slot}.
+Slot game mathematicians do not always start with a pre-existing math model from which to adjust RTP.
+Thus the assumption Balabanov, Zankinski, and Shumanov made is not applicable to certain use cases.
+\par
+In 2017, Keremedchiev, Tomov, and Barova revisited the GA approach to optimizing RTP but implemented an exact approach for calculating RTP called a ``full cycle" calculation\cite{keremedchiev2017slot}.
+This full cycle calculation, though it yields the exact RTP for a slot machine base game, only calculates values for the base game, omitting RTP for any features or bonus games that may be triggered from the base game.
+The slot machine model in their research again used 5 reels with 63 reel stops per reel and used a $3\times 5$ reel window.
+For this research Keremedchiev, Tomov, and Barova targeted $90\%$ RTP for the base game RTP.
+\par
+Though the authors stated that $90\%$ RTP is the "lowest legal value for the Bulgarian gambling market"\cite{keremedchiev2017slot}, we infer that this research would produce more user-friendly results had they targeted a lower RTP.
+The slot machine model in this research included a bonus game trigger.
+RTP must be allocated for credits or prizes awarded in the bonus game, so targeting a lower value for base game RTP would free up RTP that can be used in the bonus game. 
+While this approach resulted in faster RTP convergence than with their previous method, the full cycle calculation took more time to evaluate the objective function for each individual than Monte Carlo simulations did previously.
+Additionally, these authors optimized for RTP with slight consideration for bonus game hit frequencies for their objective function.
+\subsection{Evolutionary Computing}
+In 2015, Balabanov, Zankinski, and Shumanov applied a linear transformation to three criteria to create a single-objective Discrete Differential Evolution method\cite{balabanovDDE}.
+The three criteria were RTP, prizes equalization, and symbol diversity.
+Prizes equalization is the concept of having each symbol equally contribute to the RTP; credit yield discrepancies are offset by symbol pattern hit frequency.
+Symbol diversity, as defined in \cite{balabanovDDE}, is ``a parameter related to how many symbols of the same kind are next to each other in a single reel".
+Like the previous paper, this paper utilizes a 5-reel slot machine with 63 reel stops per reel and a $3\times 5$ window.
+Their work implemented Monte Carlo simulations for approximating RTP and prizes equalization to be used in the objective function for each individual.
+Each individual ran ten sets of $1,000,000$ Monte Carlo simulations for a total of $10,000,000$ simulations to achieve better accuracy \cite{balabanovDDE}.
+The authors again concluded that this method using Monte Carlo Simulations to approximate RTP was time-consuming.
+\par
+In 2021, Kamanas, Sifaleras, and Samaras implemented Variable Neighborhood Search, or VNS, to attempt to optimize RTP\cite{kamanas2021slot}.
+These authors examined three popular iGaming slot games and explored constructing reel sets for these games via VNS.
+Each slot game model uses 5 reels and has a $3\times 5$ window.
+The authors used $100,000$ or $1,000,000$ Monte Carlo simulations to approximate RTP for each individual.
+While Kamanas, Sifaleras, and Samaras successfully reduced RTP for each of these three games to yield viable reels, they concluded that there exists a need to ``speed up the whole process" of approximating or calculating RTP\cite{kamanas2021slot}.
+
+\section{Method}
+\label{method}
+\subsection{Base Game}
+This work includes an alternative method to calculating RTP for a slot machine base game. Thus game attributes such as full game RTP and full game hit frequency cannot be calculated nor approximated to with this method.
+\subsection{Chromosomal Representation}
+Previous research in this field has focused on generating slot machine reels that lack defining characteristics, opting for an entirely-randomized ordering of symbols.
+While Balabanov, Zankinski, and Shumanov included symbol diversity as one of their criteria in \cite{balabanovDDE}, they did not consider the possibility for a game to require identical symbols located adjacently on a given reel.
+Symbol stacking is an incredibly common reel characteristic or feature in slot machines.
+This feature manifests in a variety of ways: only one symbol such as a Wild symbol or the top-paying symbol can appear as a stack, or multiple symbols can appear as a stack.
+These stacks may additionally be restricted to specific reels.
+\par
+This research primarily focuses on including, restricting, and monitoring symbol stacks in reels for a slot machine base game.
+To adhere to any stacking requirements, this work deviates from previous research in this field by changing the chromosomal representation.
+Reels are re-contextualized as concatenated segments, or stacks, of symbols; a segment may contain between 0 and $X$ symbols where $X$ is a non-zero integer determined by the user.
+Each segment with 2 or more symbols must contain identical symbols.
+\begin{table}
+\parbox{.45\linewidth}{
+\centering
+\begin{tabular}{|c|}
+\hline
+$(1,3)$\\
+\hline
+\end{tabular}
+\caption{A tuple depicting a stack of symbol 1 with length 3}
+\label{tuple}
+}
+\hfill
+\parbox{.45\linewidth}{
+\centering
+\begin{tabular}{|c|}
+\hline
+1\\
+\hline
+1\\
+\hline
+1\\
+\hline
+\end{tabular}
+\caption{A stack of symbol 1 with length 3}
+\label{stack}
+}
+\end{table}
+\par
+This chromosome still uses a 2D array with a 1D array per reel, however each position in each 1D array is a tuple that represents a segment; the first element is the symbol and the second element is the segment length. Table \ref{tuple} contains an example of a tuple entry and \ref{stack} shows the representation of said tuple as part of a reel.
+This methodology results in a set of reels that may vary in length.
+Though previous research used the same number of symbols per reel, it is not a requirement for several slot machine products.
+\par
+Each tuple in the chromosome is initialized with a random symbol from symbol list $S$ and a randomized, non-negative stack length with bounds determined by the user.
+\subsection{Chromosome Adjustments}
+\label{adjust}
+Initializing and altering a chromosome may result in reels that contradict the reel characteristics prescribed for a game.
+Certain deterministic adjustments are performed upon a chromosome to yield valid reels.
+For instance, if a tuple depicts a stack of two or more bonus symbols, then the stack length, or the second element of said tuple, is overwritten as 1.
+Other adjustments may include:
+\begin{itemize}
+\item Reducing the number of symbols in a stack to the symbol's prescribed maximum.
+\item Increasing the number of symbols in a stack to the symbol's prescribed minimum.
+\item Interpreting adjacent tuples with identical symbols as one stack.
+\item Setting the number of bonus symbols in a stack to 0 if the stack appears in the same reel window as another bonus symbol.
+\end{itemize}
+These adjustments may force a tuple to have its stack length, or second element, set to 0.
+Setting each reel to have a large number of segments remedies possible drawbacks resulting from tuples with a stack length of 0.
+The adjustment strategy must be completely deterministic; when presented with two identical chromosomes, the chromosomes post-adjustment must also be identical.
+\subsection{Chromosome to Reels}
+After processing and applying any chromosome adjustments, the reels are temporarily written as 2D arrays as input for calculating the values for the objective functions.
+Each reel is interpreted as a 1D array populated by the reel's tuples in descending order down the chromosome's array; the position index increases.
+Each tuple $(X,Y)$ places symbol $X$ into the array $Y$ times; if $Y$ is 0, then the tuple is ignored.
+\subsection{Objective Functions}
+This GA utilizes three objective functions for the following criteria: RTP, symbol diversity, and bonus frequency.
+Note that the equations referenced in these objective functions use symbol list $S$, symbol patterns for lines list $P_l$, symbol patterns for scatters list $P_s$, window reel height $m$, and number of reels $n$.
+Let $ANY$ be a symbol that represent every $s \in S$.
+Let $B \subset S$ such that $B$ contains all bonus symbols.
+\par
+Let the function $\text{Pay}_{(s,r)}$ represent the credit award or prize associated with pattern $p_{(s,r)} \in P_l$ in the context of line win patterns and $p_{(s,r)} \in P_s$ in the context of scatter win patterns. 
+Let the function $\text{Freq}(s,r)$ calculate the frequency of symbol $s$ on reel $r$.
+\par
+Let the function $\text{Unique}(l,r,m)$ count the number of unique symbols on reel $r$ starting at reel stop $l$, descending down the reels (increasing in position index) to observe $m$ symbol positions.
+If $\text{Freq}(ANY,r) - (l + 1) < m$, then the remaining positions needed to count $m$ symbols start at position $0$.
+\par
+Let $C$ denote the cycle, the number of combinations for landing all possible reel stops on each reel; $C$ is calculated as 
+\begin{equation}
+C = \prod_{r=1}^{n} \text{Freq}(ANY,r).
+\end{equation}
+\par
+The objective function for RTP is problem-dependent, based on the pay combos and the presence of any substitution symbols such as Wilds.
+Instead of using a Monte Carlo simulation to approximate RTP or a full cycle calculation found in \cite{keremedchiev2017slot}, this work utilizes a different approach to calculate exact RTP.
+\par
+The two lists $S_I$ and $S_E$ are created to better represent the symbol patterns.
+For each $s \in S$, list $S_I$ contains an inclusion symbol $IN_s$, a symbol representing a set of symbols that are accepted in place of symbol $s$.
+That is, if symbol $1$ represents a Wild symbol that substitutes for symbol $3$, then symbol $IN_3$ indicates that either symbols $1$ or $3$ can be accepted in the pattern at the specified position.
+The frequency for $IN_s$ is calculated as 
+\begin{equation}
+\text{Freq}(IN_s,r) = \sum_{i \in IN_s} \text{Freq}(i,r)\text{ ,}
+\end{equation}
+a summation of the frequencies for each symbol represented by $IN_s$.
+\par
+For each $s \in S$, list $S_E$ contains an exclusion symbol $EX_s$, a symbol representing a set of symbols that are not accepted in place of symbol $s$.
+It follows that $IN_s \bigcup EX_s = S$. 
+The frequency for $EX_s$, similar to $IN_s$, is a summation of frequencies for each symbol represented by $EX_s$.
+\par
+Each $p\in P_l$ is rewritten in terms of $IN_s$, $EX_s$, and $ANY$.
+For instance, the symbol pattern 3 of-a-kind of 4, $p_{4,3}$, is interpreted as
+\begin{equation}
+p_{4,3} = IN_4 \text{ } IN_4\text{ } IN_4 \text{ }EX_4\text{ } ANY
+\end{equation}
+since reel 4 cannot have symbols $4$ nor $1$ in the line position; otherwise the pattern would evaluate to 4 of-a-kind of 4.
+\par
+Depending on the pay amount for each symbol pattern, additional considerations may be required to calculate the exact RTP.
+The pay table developed for this research illustrated in Table \ref{linePays} is set up such that the per line RTP is calculated as
+\begin{equation}
+\text{RTP} = \frac{\sum_{s \in S}\sum_{k = 1}^{K}(\prod_{r = 1}^{n} \text{Freq}(p_{(s,k)}[r-1],r))\times \text{Pay}_{(s,k)}}{C}
+\end{equation}
+where $K$ is the number of $IN_s$ symbols in the pattern and $p_{(s,k)}[r-1]$ indexes the symbol used on reel $r$ in pattern $p_{(s,k)}$.
+Since each reel stop on a reel has equal probability of landing, the number of pay lines is negligible and irrelevant for calculating RTP.
+For example, the RTP for 1 line is multiplied by 50 and divided by the wagered amount and multiplied by the original wager to expand the number of lines to 50.
+That said, for this research all symbol patterns on lines are paid from left to right, each symbol appearing on adjacent reels starting from the leftmost reel.
+\par
+This work interprets symbol diversity as the percentage of identical symbols that appear in the same reel window in a single reel, deviating from the description in \cite{balabanovDDE}. Since this work has a high focus on symbol stacks, cases such as \textit{X Y X} appearing on the reels warrant observation. The objective function for symbol diversity, abbreviated as SymDiv, is calculated as
+\begin{equation}
+\text{SymDiv} = \frac{\sum_{r=1}^{n}\frac{\sum_{l=1}^{\text{Freq}(ANY,r)}\text{Unique}(l,r,m)}{\text{Freq}(ANY,r)\times m}}{n}
+\end{equation}
+\par
+The objective function for bonus game hit frequency is problem-dependent, based on the number of bonus symbols and how many symbols are required to trigger bonuses.
+The pay table developed for this research only contains one bonus symbol that uses scatter patterns to evaluate upon.
+It is a trivial matter of combinatorics to obtain the combinations of reels that stop with a bonus symbol in the reel window for 3, 4, or 5 bonus symbols.
+Each of these combinations, $p \in P_s$, is rewritten in terms of $Scatter\_{IN}_b$ and $Scatter\_{EX}_b$ where $b\in B$ is the bonus symbol.
+This work restrains each reel such that each reel can only contain up to one bonus symbol in the reel window.
+Thus the frequencies for $Scatter\_{IN}_b$ and $Scatter\_{EX}_b$ are easily calculated as
+\begin{align}
+		\text{Freq}(Scatter\_{IN}_b,r) = \text{Freq}(IN_b,r) \times m \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }& \\
+   \begin{aligned}
+      \text{Freq}(Scatter\_{EX}_b,r) &= \text{Freq}(ANY,r)\\
+      &\text{ }\text{ }\text{ }- \text{Freq}(Scatter\_{IN}_b,r)
+   \end{aligned}
+\end{align}
+since each appearance of $b$ is independent from one another.
+Due to our aforementioned restrictions, the following calculation shall suffice for bonus game hit frequency, abbreviated to BFreq.
+
+\begin{equation}
+\text{BFreq} = \frac{\sum_{b \in B}\sum_{k=1}^{K}\sum_{p \in P_s}\prod_{r=1}^{n}\text{Freq}(p_{(b,k)}[r-1],r)}{C}
+\end{equation}
+\subsection{Fitness Function}
+The Fitness function used in this research is 
+\begin{align}
+   \begin{aligned}
+      \text{Fitness}&= 100 - \min(10\times \bigl| \frac{\text{tRTP} - \text{RTP}}{\text{tRTP}}\bigr|, 6)^2\\
+      &\text{ }\text{ }\text{ }- 28\times\min(2\times \vert \frac{\text{tSymDiv} - \text{SymDiv}}{\text{tSymDiv}} \vert, 1) \\
+      &\text{ }\text{ }\text{ }- \min(2\times \bigl| \frac{\text{tBFreq} - \text{BFreq}}{\text{tBFreq}} \bigr|, 6)^2, \\
+   \end{aligned}
+\label{fitness}
+\end{align}
+where tRTP is the targeted RTP, tSymDiv is the targeted symbol diversity, and tBFreq is the targeted bonus game hit frequency.
+\subsection{GA Operators}
+This research utilizes tournament selection, uniform crossover, and two layers of mutation operators.
+The tournament selection process first selects one parent from a binary tournament of individuals selected via roulette wheel selection.
+The selected parent is removed from the larger pool of individuals and a second parent is selected in the same manner.
+Two child individuals are created.
+If crossover is selected to occur for these two individuals, for each tuple in each array in the chromosome, they ``compete" to determine which of them inherits said tuple from the first parent.
+The ``loser" inherits the tuple in the same position from the second parent.
+\par
+Mutation may occur in two separate manners independent of each other.
+The first form of mutation, if it's determined to occur for an individual, swaps one tuple with another tuple located within the chromosome.
+The probability for this mutation is labeled ``Swap mutation rate" in Table \ref{gaParameters}.
+\par
+The second form of mutation is determined on a tuple-by-tuple basis for the individual's chromosome.
+A tuple can mutate in one of two ways with equal likelihood:
+\begin{itemize}
+\item The symbol assigned to the tuple (first element) shifts to the symbol directly ahead of it or behind it in symbol list $S$ with modulo $|S|$ applied to prevent invalid indices. The two directions for shifting have equal probability.
+\item The stack length assigned to the tuple (second element) increments or decrements by 1 with modulo, based on the assigned symbol's length parameters, applied to prevent negative or exceedingly-long stack lengths. Incrementing and decrementing the stack length have equal probability.
+\end{itemize}
+The probability for this mutation is labeled ``Tuple mutation rate" in Table \ref{gaParameters}.
+The four individuals, two parents and two children, are evaluated and the two individuals with the highest fitness are set aside in a pool of individuals.
+This process continues until no individuals are left in the initial pool, and the generation ends.
+The next generation initiates with selecting two parents from the newer large pool of individuals, and the process repeats until the maximum number of generations has been met.
+\begin{table}[htbp]
+\caption{GA Parameters}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Parameter}&\textbf{Value} \\
+\hline
+Generation gap & $1.0$ \\
+\hline
+Crossover rate & $0.9$  \\
+\hline
+Swap mutation rate & $0.1$  \\
+\hline
+Tuple mutation rate & $0.01$  \\
+\hline
+Maximum generations & $100$  \\
+\hline
+Number of individuals & $50$  \\
+\hline
+Number of variables & $2\times$ number of segments$^{\mathrm{a}}$  \\
+\hline
+\multicolumn{2}{l}{$^{\mathrm{a}}$2 variables per tuple.}
+\end{tabular}
+\label{gaParameters}
+\end{center}
+\end{table}
+\section{Experimental Design}
+\label{design}
+All experiments were performed using an Acer Nitro AN515-53 laptop with an Intel Core i5-8300U CPU at 2.30GHz, 8GB DDR4 RAM at 2304 MHz, and running 64-bit Microsoft Windows 10 Home. The experiments used an original slot machine math model created solely for research purposes.
+\begin{table}[htbp]
+\caption{Pay table features}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Name}&\textbf{Feature} \\
+\hline
+Target RTP (tRTP) & $0.70$ \\
+\hline
+Target symbol diversity (tSymDiv) & $0.45$ \\
+\hline
+Target bonus game hit frequency (tBFreq) & $0.008$ \\
+\hline
+Number of reels $(n)$ & $5$ \\
+\hline
+Reel window height $(m)$ & $3$ \\
+\hline
+Reel window dimensions $(m\times n)$ & $3\times 5$ \\
+\hline
+Number of segments per reel & $100$ \\
+\hline
+Symbol list $S$ & $1-11$ \\
+\hline
+Wild symbols & $1$  \\
+\hline
+Symbols that are Wild symbols & $1$ \\
+\hline
+Symbols that Wild symbols can substitute for & $2-10$\\
+\hline
+Bonus symbols & $11$  \\
+\hline
+Minimum number of Bonus symbols to trigger bonus & $3$ \\
+\hline
+Maximum number of Bonus symbols to trigger bonus & $5$ \\
+\hline
+Minimum stack length for symbol 1 & $3$  \\
+\hline
+Maximum stack length for symbol 1 & $5$  \\
+\hline
+Minimum stack length for symbols 2-10 & $1$  \\
+\hline
+Maximum stack length for symbols 2-10 & $2$  \\
+\hline
+Minimum stack length for symbol 11 & $1$  \\
+\hline
+Maximum stack length for symbols 11 & $1$  \\
+\hline
+\end{tabular}
+\label{paytableFeatures}
+\end{center}
+\end{table}
+\par
+Table \ref{paytableFeatures} contains the features specific to the slot machine game math model used in these experiments.
+The symbol pay table for the line patterns is presented in Table \ref{linePays} and symbol pay table for the scatter patterns is presented in Table \ref{scatterPays}.
+This model is targeting $70\%$ RTP to create a surplus in RTP that the bonus game can leverage to target a full game, legal RTP value.
+The target symbol diversity is $45\%$ to counteract the large influence the chromosomal representation has on stacking symbols.
+The target bonus game hit frequency is $0.8\%$, or 1-in-125 games.
+This frequency is typically seen in some capacity in video slot machine products, hence it is appropriate for this experiment.
+\begin{table}[htbp]
+\caption{Line Pattern Symbol Pay Table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Symbol}&\multicolumn{5}{|c|}{\textbf{Symbol Count}} \\
+\cline{2-6} 
+\textbf{Name} & \textbf{1}& \textbf{2}& \textbf{3}& \textbf{4}& \textbf{5} \\
+\hline
+1& 0 & 0$^{\mathrm{a}}$ & 0$^{\mathrm{a}}$ & 0$^{\mathrm{a}}$ & 0$^{\mathrm{a}}$  \\
+\hline
+2& 0 & 5 & 20 & 50 & 200  \\
+\hline
+3& 0 & 0 & 15 & 45 & 100  \\
+\hline
+4& 0 & 0 & 15 & 45 & 100  \\
+\hline
+5& 0 & 0 & 10 & 30 & 75  \\
+\hline
+6& 0 & 0 & 10 & 30 & 75  \\
+\hline
+7& 0 & 0 & 5 & 20 & 50  \\
+\hline
+8& 0 & 0 & 5 & 20 & 50  \\
+\hline
+9& 0 & 0 & 5 & 20 & 50  \\
+\hline
+10& 0 & 0 & 5 & 20 & 50  \\
+\hline
+\multicolumn{6}{l}{$^{\mathrm{a}}$Pays the amount for symbol 2.}
+\end{tabular}
+\label{linePays}
+\end{center}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Scatter Pattern Symbol Pay Table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Symbol}&\multicolumn{5}{|c|}{\textbf{Symbol Count}} \\
+\cline{2-6} 
+\textbf{Name} & \textbf{1}& \textbf{2}& \textbf{3}& \textbf{4}& \textbf{5} \\
+\hline
+11& 0 & 0 &\multicolumn{3}{|c|}{\textbf{Bonus Trigger}}  \\
+\hline
+\end{tabular}
+\label{scatterPays}
+\end{center}
+\end{table}
+Each reel contains $100$ tuples resulting in $500$ total tuples and $1,000$ modifiable values.
+Each chromosome is initialized with randomly-selected values for each tuple.
+The assigned symbol is selected from the symbol list $S$ with replacement, and the assigned segment length is selected via roulette wheel selection with replacement from Table \ref{segmentLength}.
+Once these selections are made for each tuple in the chromosome, the chromosome is adjusted using methods from \ref{adjust} and the GA begins once the number of individuals prescribed by the GA's parameters in Table \ref{gaParameters} have been created.
+\begin{table}[htbp]
+\caption{Segment Distribution Table}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Segment Length}&\textbf{Probability} \\
+\hline
+1 & $0.8$ \\
+\hline
+2 & $0.2$  \\
+\hline
+\end{tabular}
+\label{segmentLength}
+\end{center}
+\end{table}
+\section{Results}
+\label{result}
+Thirty independent runs of the GA were performed for this experiment.
+The GA calculated the exact RTP in a sufficient amount of time since the generations progressed in a timely fashion. The efficiency of this calculation is evident in the video recording of the GA performing one run \cite{VideoRecording}.
+\par
+In addition, this pay table was also ran on a hill climber (HC) variant of the GA program where the crossover probability was set to 0.
+Figures \ref{fig:fitnessGA} - \ref{fig:bonusHC} illustrate the differences in performance between the GA and the HC; these reported statistics averaged the average values and maximum values at each generation between the 30 runs.
+The HC seemed to disregard targeting $70\%$ RTP altogether as it trended towards $480\%$.
+The GA meaningfully optimized all three criteria with each run's best individual ending within $1\%$ of the optimum fitness.
+\par
+One observation of note is that each criterion converged with a different number of generations completed.
+Though the averages for the Average and Maximum values for each criterion tend to close in at approximately 80 generations, the symbol diversity and bonus frequency values are relatively distant given their small target values.
+\par
+The best set of reels from each GA show interesting results.
+From the thirty GA runs performed, only sixteen of them included at least one wild stack and at least one bonus symbol on every reel.
+Since this GA did not penalize an individual for omitting a given symbol from a reel, those results are hardly surprising.
+The interesting details are instead found in which reels are omitting which symbols.
+\begin{table}[htbp]
+\caption{Best GA Individual Reel Omissions Table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Reel}&\textbf{Wild Stack}&\textbf{Bonus Symbol} \\
+\hline
+1 & $2$ & $0$ \\
+\hline
+2 & $2$ & $1$  \\
+\hline
+3 & $3$ & $1$ \\
+\hline
+4 & $1$ & $1$  \\
+\hline
+5 & $2$ & $2$  \\
+\hline
+\end{tabular}
+\label{omissions}
+\end{center}
+\end{table}
+\par
+Though thirty runs is an awfully small sample size when looking at the best individual from each run, Table \ref{omissions} presents enlightening statistics.
+Judging from these numbers, the GA is more likely to omit wild stacks from reels $1-3$ instead of reels $4$ and $5$.
+This behavior leans toward a sound methodology for reducing RTP in a slot machine base game or free games bonus.
+There exist several slot machines that feature wild stacks only on reels $2-5$, omitting reel $1$ altogether.
+Though those games still include wild stacks on reels $2$ and $3$, their presence is muted, creating a ``pinch point" in the game where big wins are largely teased and seldom awarded.
+\par
+Furthermore, the GA is more likely to leave off bonus symbols from reels $4$ and $5$ than reels $1-3$ for a similar reason.
+Though a bonus game triggers with $3$ or more bonus symbols, nothing happens when only $2$ bonus symbols are present in the reel window when the reels stop.
+Thus bonus symbols are considered to be ``blockers" when they appear on the leftmost reels, prohibiting a majority line pattern pay wins from forming.
+The GA, like slot game mathematicians, is capable of capitalizing on the ``blocking" nature of bonus symbols, a nuanced decision that a portion of slot machine players are oblivious to.
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{GA_Fitness.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 100,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={Fitness}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Fitness Graph for GA}\label{fig:fitnessGA}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{HC_Fitness.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 100,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={Fitness}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Fitness Graph for HC}\label{fig:fitnessHC}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{GA_RTP.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 10,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={RTP}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{RTP Graph for GA}\label{fig:rtpGA}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{HC_RTP.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 10,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={RTP}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{RTP Graph for HC}\label{fig:rtpHC}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{GA_symDiversities.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 1,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={Symbol Diversity}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Symbol Diversity Graph for GA}\label{fig:symDivGA}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{HC_symDiversities.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 1,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={Symbol Diversity}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Symbol Diversity Graph for HC}\label{fig:symDivHC}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{GA_bonusFrequencies.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 0.1,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={Bonus Frequency}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Bonus Frequency Graph for GA}\label{fig:bonusGA}
+\end{figure}
+\begin{figure}[H]
+	\centering
+\pgfplotstableread[col sep=comma,]{HC_bonusFrequencies.csv}\datatable
+\scalebox{0.75}{
+\begin{tikzpicture}
+\begin{axis}[
+    xtick={0,10,20,30,40,50,60,70,80,90,100},
+    xticklabels = {0,10,20,30,40,50,60,70,80,90,100},
+    ymin = 0,
+    ymax = 0.1,
+    xmin = 0,
+    xmax = 100,
+    x tick label style = {font = \small, text width = 1cm, align = center, rotate = 70, anchor = north east},
+    legend style={at={(0.98,0.7)},anchor=south east},
+    xlabel={Generation},
+    ylabel={Bonus Frequency}]
+\addplot [mark=., blue!80 ] table [x expr=\coordindex, y={Max}]{\datatable};
+\addlegendentry{$Max$}
+\addplot [mark=., red!80] table [x expr=\coordindex, y={Avg}]{\datatable};
+\addlegendentry{$Avg$}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Bonus Frequency Graph for HC}\label{fig:bonusHC}
+\end{figure}
+\section{Conclusions and Future Work}
+\label{conclusions}
+These experiments performed on both the Hill Climber and the Genetic Algorithm demonstrate the latter's aptitude in optimizing RTP, symbol diversity, and bonus game hit frequency.
+The method used for calculating the exact RTP of the base game seems vastly more efficient than the full cycle calculation used in \cite{keremedchiev2017slot} and $1,000,000$ Monte Carlo simulations per individual per generation per GA run.
+Through focusing on reel characteristics via the chromosomal representation, the GA created viable slot machine game math models and even identified mathematical traits relevant to slot game mathematicians.
+\par
+Developing a method specific to this GA to ensure that each symbol appears on reels determined by the user would serve as valuable future work. Additionally, it is worth exploring the implementation of more complex base game features for this GA to search for the limits of what it can do.
+
+\printbibliography[title={References}]
+\end{document}

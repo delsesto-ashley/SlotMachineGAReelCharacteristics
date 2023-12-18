@@ -1,0 +1,312 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{SlotsDict}{misc}{}
+      \list{publisher}{1}{%
+        {E3WD Inc}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{World Casino Directory}
+      \field{month}{7}
+      \field{note}{(accessed Dec. 16, 2023)}
+      \field{title}{Slots Dictionary: Definitions of slot machine related terminology \& lingo}
+      \field{year}{2018}
+      \verb{urlraw}
+      \verb https://www.worldcasinodirectory.com/articles/slots-dictionary
+      \endverb
+      \verb{url}
+      \verb https://www.worldcasinodirectory.com/articles/slots-dictionary
+      \endverb
+    \endentry
+    \entry{AGA2023}{misc}{}
+      \list{publisher}{1}{%
+        {American Gaming Association}%
+      }
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Gaming Association}
+      \field{month}{11}
+      \field{note}{(accessed Dec. 16, 2023)}
+      \field{title}{Q3 2023 Commercial Gaming Revenue Reaches \$16.17B, Marking Industry’s Highest-Grossing Third Quarter}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://www.americangaming.org/new/q32023cgrt/
+      \endverb
+      \verb{url}
+      \verb https://www.americangaming.org/new/q32023cgrt/
+      \endverb
+    \endentry
+    \entry{Baldo2022}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=337d04aeba98dd7d4d7a385038d65ee6}{%
+           family={Baldo},
+           familyi={B\bibinitperiod},
+           given={Narciso},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Texas Hold’em Questions}%
+      }
+      \strng{namehash}{337d04aeba98dd7d4d7a385038d65ee6}
+      \strng{fullhash}{337d04aeba98dd7d4d7a385038d65ee6}
+      \strng{bibnamehash}{337d04aeba98dd7d4d7a385038d65ee6}
+      \strng{authorbibnamehash}{337d04aeba98dd7d4d7a385038d65ee6}
+      \strng{authornamehash}{337d04aeba98dd7d4d7a385038d65ee6}
+      \strng{authorfullhash}{337d04aeba98dd7d4d7a385038d65ee6}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Texas Hold’em Questions}
+      \field{month}{12}
+      \field{note}{(accessed Dec. 16, 2023)}
+      \field{title}{The increasing complexity of slots}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://texasholdemquestions.com/complexity-of-slots/
+      \endverb
+      \verb{url}
+      \verb https://texasholdemquestions.com/complexity-of-slots/
+      \endverb
+    \endentry
+    \entry{ReelCharacteristicsRepo}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=eb41c0f2f41cd0cd45a9e29be5377764}{%
+           family={Del\bibnamedelima Sesto},
+           familyi={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Ashley},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {GitHub}%
+      }
+      \strng{namehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{fullhash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{bibnamehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{authorbibnamehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{authornamehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{authorfullhash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \field{extraname}{1}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{GitHub repository}
+      \field{note}{(accessed Dec. 17, 2023)}
+      \field{title}{SlotMachineGAReelCharacteristics}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://github.com/delsesto-ashley/SlotMachineGAReelCharacteristics
+      \endverb
+      \verb{url}
+      \verb https://github.com/delsesto-ashley/SlotMachineGAReelCharacteristics
+      \endverb
+    \endentry
+    \entry{balabanov2015slot}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=fb637ff7b2b0d3c2db51a7b244e254b2}{%
+           family={Balabanov},
+           familyi={B\bibinitperiod},
+           given={Todor},
+           giveni={T\bibinitperiod}}}%
+        {{hash=0ab46ed1101a61aced7185359793dbfc}{%
+           family={Zankinski},
+           familyi={Z\bibinitperiod},
+           given={Iliyan},
+           giveni={I\bibinitperiod}}}%
+        {{hash=02de9948225ac293fb39cb6edc83937b}{%
+           family={Shumanov},
+           familyi={S\bibinitperiod},
+           given={Bozhidar},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{fullhash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{bibnamehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{authorbibnamehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{authornamehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{authorfullhash}{d4df09e64527491e4c5edae51f4b0230}
+      \field{extraname}{1}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Numerical Methods and Applications: 8th International Conference, NMA 2014, Borovets, Bulgaria, August 20-24, 2014, Revised Selected Papers 8}
+      \field{title}{Slot machines RTP optimization with genetic algorithms}
+      \field{year}{2015}
+      \field{pages}{55\bibrangedash 61}
+      \range{pages}{7}
+    \endentry
+    \entry{kamanas2021slot}{article}{}
+      \name{author}{3}{}{%
+        {{hash=5412370318bed92528480866ce1276cc}{%
+           family={Kamanas},
+           familyi={K\bibinitperiod},
+           given={Pantelis-Arsenios},
+           giveni={P\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=a5157fdc553cefa2bfb2fc8a838cb2ca}{%
+           family={Sifaleras},
+           familyi={S\bibinitperiod},
+           given={Angelo},
+           giveni={A\bibinitperiod}}}%
+        {{hash=376d800cdb635af6d729d6bc247cf86c}{%
+           family={Samaras},
+           familyi={S\bibinitperiod},
+           given={Nikolaos},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Hindawi Limited}%
+      }
+      \strng{namehash}{b03e6b3e352e5ecc9de67dc0aef25514}
+      \strng{fullhash}{b03e6b3e352e5ecc9de67dc0aef25514}
+      \strng{bibnamehash}{b03e6b3e352e5ecc9de67dc0aef25514}
+      \strng{authorbibnamehash}{b03e6b3e352e5ecc9de67dc0aef25514}
+      \strng{authornamehash}{b03e6b3e352e5ecc9de67dc0aef25514}
+      \strng{authorfullhash}{b03e6b3e352e5ecc9de67dc0aef25514}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Mathematical Problems in Engineering}
+      \field{title}{Slot machine RTP optimization using variable neighborhood search}
+      \field{volume}{2021}
+      \field{year}{2021}
+      \field{pages}{1\bibrangedash 8}
+      \range{pages}{8}
+    \endentry
+    \entry{keremedchiev2017slot}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=f78e21b82e99fae7ce48f10fe6284971}{%
+           family={Keremedchiev},
+           familyi={K\bibinitperiod},
+           given={Delyan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=f824eade2260fad51915d93690a8a816}{%
+           family={Tomov},
+           familyi={T\bibinitperiod},
+           given={Petar},
+           giveni={P\bibinitperiod}}}%
+        {{hash=db792bfd8ee7ec10e857244f5d23c5a8}{%
+           family={Barova},
+           familyi={B\bibinitperiod},
+           given={Maria},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{2ed64bcfe6a753cd5b2a9525616f7095}
+      \strng{fullhash}{2ed64bcfe6a753cd5b2a9525616f7095}
+      \strng{bibnamehash}{2ed64bcfe6a753cd5b2a9525616f7095}
+      \strng{authorbibnamehash}{2ed64bcfe6a753cd5b2a9525616f7095}
+      \strng{authornamehash}{2ed64bcfe6a753cd5b2a9525616f7095}
+      \strng{authorfullhash}{2ed64bcfe6a753cd5b2a9525616f7095}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Numerical Analysis and Its Applications: 6th International Conference, NAA 2016, Lozenetz, Bulgaria, June 15-22, 2016, Revised Selected Papers 6}
+      \field{title}{Slot machine base game evolutionary RTP optimization}
+      \field{year}{2017}
+      \field{pages}{406\bibrangedash 413}
+      \range{pages}{8}
+    \endentry
+    \entry{balabanovDDE}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=fb637ff7b2b0d3c2db51a7b244e254b2}{%
+           family={Balabanov},
+           familyi={B\bibinitperiod},
+           given={Todor},
+           giveni={T\bibinitperiod}}}%
+        {{hash=0ab46ed1101a61aced7185359793dbfc}{%
+           family={Zankinski},
+           familyi={Z\bibinitperiod},
+           given={Iliyan},
+           giveni={I\bibinitperiod}}}%
+        {{hash=02de9948225ac293fb39cb6edc83937b}{%
+           family={Shumanov},
+           familyi={S\bibinitperiod},
+           given={Bozhidar},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{fullhash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{bibnamehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{authorbibnamehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{authornamehash}{d4df09e64527491e4c5edae51f4b0230}
+      \strng{authorfullhash}{d4df09e64527491e4c5edae51f4b0230}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Large-Scale Scientific Computing: 10th International Conference, LSSC 2015, Sozopol, Bulgaria, June 8-12, 2015. Revised Selected Papers 10}
+      \field{title}{Slot machine RTP optimization and symbols wins equalization with discrete differential evolution}
+      \field{year}{2015}
+      \field{pages}{210\bibrangedash 217}
+      \range{pages}{8}
+    \endentry
+    \entry{VideoRecording}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=eb41c0f2f41cd0cd45a9e29be5377764}{%
+           family={Del\bibnamedelima Sesto},
+           familyi={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Ashley},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {GitHub}%
+      }
+      \strng{namehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{fullhash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{bibnamehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{authorbibnamehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{authornamehash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \strng{authorfullhash}{eb41c0f2f41cd0cd45a9e29be5377764}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{(accessed Dec. 17, 2023)}
+      \field{title}{GA Run Recording}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://delsesto-ashley.github.io/SlotMachineGAReelCharacteristics/
+      \endverb
+      \verb{url}
+      \verb https://delsesto-ashley.github.io/SlotMachineGAReelCharacteristics/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

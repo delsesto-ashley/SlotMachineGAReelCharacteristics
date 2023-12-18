@@ -19,23 +19,45 @@ def WriteToCSV(simObj):
         writer.writerow(["x-axis", "Min","Avg", "Max"])
         for i in range(simObj.lGen):
             writer.writerow([i, round(simObj.avgSymDiversities[0][i],5), round(simObj.avgSymDiversities[1][i],5), round(simObj.avgSymDiversities[2][i],5)])
-
-def BestToCSV(simObj):
-    fName = 'Best.csv'
+    fName = 'bonusFrequencies.csv'
     with open(fName,'w',newline='') as file:
         writer = csv.writer(file)
-        row = ['Seed IDX', 'Generation', 'Fitness', 'RTP', 'Symbol Diversity']
-        for i in range(len(simObj.best[0][4])):
-            for j in range(len(simObj.best[0][4][i])):
-                row.append('R'+str(i+1)+' Seg' + str(j) + ' Symbol')
-                row.append('R'+str(i+1)+' Seg' + str(j) + ' Length')
+        writer.writerow(["x-axis", "Min","Avg", "Max"])
+        for i in range(simObj.lGen):
+            writer.writerow([i, round(simObj.avgBonusFrequencies[0][i],5), round(simObj.avgBonusFrequencies[1][i],5), round(simObj.avgBonusFrequencies[2][i],5)])
+
+def BestToCSV(simObj):
+    for simIDX in range(len(simObj.best)):
+        fName = 'Best_'
+        if simIDX < 10:
+            fName += '0'
+        fName += str(simIDX) + '.csv'
+        with open(fName,'w',newline='') as file:
+            writer = csv.writer(file)
+            row = ['Generation', 'Fitness', 'RTP', 'Symbol Diversity', 'Bonus Frequency']
+            writer.writerow(row)
+            row = [simObj.best[simIDX][0],round(simObj.best[simIDX][1],5), round(simObj.best[simIDX][2],5), round(simObj.best[simIDX][3],5),round(simObj.best[simIDX][4],5)]
+            writer.writerow(row)
+            row = ['Reel 1', 'Reel 2', 'Reel 3', 'Reel 4', 'Reel 5']
+            writer.writerow(row)
+            maxLength = 0
+            for reel in simObj.best[simIDX][5]:
+                maxLength = max(maxLength,len(reel))
+            for i in range(maxLength):
+                row = []
+                for reel in simObj.best[simIDX][5]:
+                    if i < len(reel):
+                        row.append(str(reel[i]))
+                    else:
+                        row.append('')
+                writer.writerow(row)
+    fName = "Best_Summary.csv"
+    with open(fName,'w',newline='') as file:
+        writer = csv.writer(file)
+        row = ['Seed', 'Generation', 'Fitness', 'RTP', 'Symbol Diversity', 'Bonus Frequency']
         writer.writerow(row)
-        for i in range(simObj.lSeeds):
-            row = [i,simObj.best[i][0],round(simObj.best[i][1],5), round(simObj.best[i][2],5), round(simObj.best[i][3],5)]
-            for j in range(len(simObj.best[i][4])):
-                for k in range(len(simObj.best[i][4][j])):
-                    row.append(simObj.best[i][4][j][k][0])
-                    row.append(simObj.best[i][4][j][k][1])
+        for simIDX in range(len(simObj.best)):
+            row = [simIDX,simObj.best[simIDX][0],round(simObj.best[simIDX][1],5), round(simObj.best[simIDX][2],5), round(simObj.best[simIDX][3],5),round(simObj.best[simIDX][4],5)]
             writer.writerow(row)
 
 def ReadInPaytable(slotModel):
@@ -81,4 +103,5 @@ def ReadInPaytable(slotModel):
                     slotModel.includes.append([int(sLine[0]),list([int(x) for x in sLine[1:]])])
                 elif sectionIter == 3:
                     slotModel.bonusSymbols.append(int(sLine[0]))
+
             

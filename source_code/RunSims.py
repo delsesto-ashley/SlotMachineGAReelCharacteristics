@@ -2,10 +2,7 @@ import secrets
 from GA import GA
 from Statistics import Statistics
 from SlotModel import SlotModel
-from Problem import Problem
 import FileIO
-import threading
-import concurrent.futures
 from multiprocessing.pool import ThreadPool
 
 class Rngs:
@@ -17,26 +14,29 @@ class Rngs:
 		for i in range(numSeeds):
 			self.seeds.append(secrets.randbits(128))
 
-def work(seed,slotModel,soln):
+def work(seed,seedIDX,slotModel,soln):
 	#print("Seed Number: ",seed)
-	ga = GA(seed, slotModel)
+	print("Starting Seed Index ", seedIDX)
+	ga = GA(seed, seedIDX, slotModel)
 	ga.Init()
 	ga.Run()
 	soln.allFitnesses.append(ga.fitnesses)
 	soln.allRTPs.append(ga.RTPs)
 	soln.allSymDiversities.append(ga.symDiversities)
+	soln.allBonusFrequencies.append(ga.bonusFrequencies)
 	soln.best.append(ga.best)
-	print("Completed Seed ", seed)
+	print("Completed Seed Index ", seedIDX)
+	#print("Completed Seed ", seed)
 
 if __name__ == "__main__":
-	numSeeds = 1
+	numSeeds = 30
 	seedBank = Rngs()
 	seedBank.CreateSeeds(numSeeds)
 	allStats = Statistics()
 	slotModel = SlotModel()
 	FileIO.ReadInPaytable(slotModel)
-	pool = ThreadPool(1)
-	data = [(seed, slotModel,allStats) for seed in seedBank.seeds]
+	pool = ThreadPool(numSeeds//min(numSeeds,2))
+	data = [(seed, seedBank.seeds.index(seed), slotModel,allStats) for seed in seedBank.seeds]
 	results = pool.starmap(work,data)
 	allStats.FindAvg()
 	FileIO.WriteToCSV(allStats)
