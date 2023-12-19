@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.10.22)  18 DEC 2023 00:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.10.22)  18 DEC 2023 19:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1256,61 +1256,55 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 57.
 (C:\Users\ashle\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \vbox (badness 4792) has occurred while \output is active []
-
- [1{C:/Users/ashle/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/a
-shle/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
+[1{C:/Users/ashle/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/as
+hle/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
 ] [2] [3]
-Underfull \vbox (badness 1102) has occurred while \output is active []
-
-
-Underfull \hbox (badness 5592) in paragraph at lines 283--289
+Underfull \hbox (badness 5592) in paragraph at lines 295--301
 []\OT1/ptm/m/n/10 This re-search uti-lizes tour-na-ment se-lec-tion, uni-form
  []
 
 [4] [5]
 PGFPlots: reading {GA_Fitness.csv}
 PGFPlots: reading {HC_Fitness.csv}
-PGFPlots: reading {GA_RTP.csv}
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+PGFPlots: reading {GA_RTP.csv}
 PGFPlots: reading {HC_RTP.csv}
 PGFPlots: reading {GA_symDiversities.csv}
-PGFPlots: reading {HC_symDiversities.csv}
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [6]
+PGFPlots: reading {HC_symDiversities.csv}
 PGFPlots: reading {GA_bonusFrequencies.csv}
 PGFPlots: reading {HC_bonusFrequencies.csv}
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [7]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 7
-17.
+36.
 
 (C:\Users\ashle\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 717--717
-[]\OT1/ptm/m/n/10 A. Del Sesto, \OT1/ptm/m/it/10 Slot-ma-chine-ga-reelchar-ac-t
-er-is-tics\OT1/ptm/m/n/10 ,
+Underfull \hbox (badness 7379) in paragraph at lines 737--737
+\OT1/ptm/m/n/10 cessed Dec. 17, 2023), 2023. [On-line]. Avail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 717--717
-\OT1/ptm/m/n/10 (ac-cessed Dec. 17, 2023), 2023. [On-line].
+Underfull \hbox (badness 3148) in paragraph at lines 737--737
+\OT1/ptm/m/n/10 able: $https : / / github . com / delsesto -[] ashley /
  []
 
 
-Underfull \hbox (badness 3690) in paragraph at lines 717--717
+Underfull \hbox (badness 1888) in paragraph at lines 737--737
 \OT1/ptm/m/n/10 ma-chine rtp op-ti-miza-tion us-ing vari-able neigh-bor-
  []
 
-[7]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1335,10 +1329,10 @@ Package logreq Info: Writing requests to 'CS776_Paper_Ashley_DelSesto.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37818 strings out of 474823
- 914966 string characters out of 5750955
- 1986043 words of memory out of 5000000
- 59196 multiletter control sequences out of 15000+600000
+ 37821 strings out of 474823
+ 915091 string characters out of 5750955
+ 1983043 words of memory out of 5000000
+ 59199 multiletter control sequences out of 15000+600000
  596909 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,22n,131p,1154b,2294s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1362,7 +1356,7 @@ iKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/ashle/AppData/Local/Programs/M
 iKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/ashle/AppData/Local/Programs/
 MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/ashle/AppData/Local/Programs/
 MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on CS776_Paper_Ashley_DelSesto.pdf (8 pages, 265891 bytes).
+Output written on CS776_Paper_Ashley_DelSesto.pdf (8 pages, 267739 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

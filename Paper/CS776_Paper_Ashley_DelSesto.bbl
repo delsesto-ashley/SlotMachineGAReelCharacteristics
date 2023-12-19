@@ -274,6 +274,40 @@
       \field{pages}{210\bibrangedash 217}
       \range{pages}{8}
     \endentry
+    \entry{Miller1995GeneticAT}{article}{}
+      \name{author}{2}{}{%
+        {{hash=65c2d244154836236e2a192b9cf7613f}{%
+           family={Miller},
+           familyi={M\bibinitperiod},
+           given={Brad\bibnamedelima L.},
+           giveni={B\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=f4dae5bf19584b96b5db33b402a449d8}{%
+           family={Goldberg},
+           familyi={G\bibinitperiod},
+           given={David\bibnamedelima E.},
+           giveni={D\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{bbeb153d623a36f42f928e644e0d9c1d}
+      \strng{fullhash}{bbeb153d623a36f42f928e644e0d9c1d}
+      \strng{bibnamehash}{bbeb153d623a36f42f928e644e0d9c1d}
+      \strng{authorbibnamehash}{bbeb153d623a36f42f928e644e0d9c1d}
+      \strng{authornamehash}{bbeb153d623a36f42f928e644e0d9c1d}
+      \strng{authorfullhash}{bbeb153d623a36f42f928e644e0d9c1d}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Complex Syst.}
+      \field{title}{Genetic Algorithms, Tournament Selection, and the Effects of Noise}
+      \field{volume}{9}
+      \field{year}{1995}
+      \verb{urlraw}
+      \verb https://api.semanticscholar.org/CorpusID:6491320
+      \endverb
+      \verb{url}
+      \verb https://api.semanticscholar.org/CorpusID:6491320
+      \endverb
+    \endentry
     \entry{VideoRecording}{misc}{}
       \name{author}{1}{}{%
         {{hash=eb41c0f2f41cd0cd45a9e29be5377764}{%
